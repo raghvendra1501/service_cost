@@ -3,17 +3,8 @@ class Service::AmazonCloudFrontController < ApplicationController
   before_action :validate_region_and_date
 
   def region_based_price
-    prices = AwsProductPrice
-      .joins(:aws_product)
-      .where(
-        'aws_products.aws_region_id = :region_id',
-        region_id: @region.id
-      )
-
-    prices = prices.where('effective_date <= :effective_date',
-        effective_date: @effective_date
-      ).order(effective_date: :desc).limit(1) if @effective_date.present?
-
+    prices = AwsProductPrice.get_prices_by_region @region.id
+    prices = prices.get_prices_on_effective_date @effective_date if @effective_date.present?
     render json: prices.to_required_format
   end
 
@@ -36,8 +27,8 @@ class Service::AmazonCloudFrontController < ApplicationController
     end
 
     def invalid_date? date
-      date_format = '%Y-%m-%d'
-      @effective_date = DateTime.strptime(date, date_format).end_of_day
+      passed_date = date.to_datetime
+      @effective_date = passed_date&.end_of_day
       false 
     rescue ArgumentError
       true

@@ -27,4 +27,20 @@ class AwsProductPrice < ApplicationRecord
     end
     required_pricing_arr
   end
+
+  def self.get_prices_by_region region_id
+    joins(:aws_product)
+    .where(
+      'aws_products.aws_region_id = :region_id',
+      region_id: region_id
+    )
+  end
+
+  def self.get_prices_on_effective_date effective_date
+    required_price_ids = self.select("MAX(aws_product_prices.id) AS price_id")
+    .where('effective_date <= :effective_date',
+      effective_date: effective_date
+    ).group(:aws_product_id).collect(&:price_id)
+    self.where(id: required_price_ids)
+  end
 end
