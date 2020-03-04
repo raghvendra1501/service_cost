@@ -22,7 +22,7 @@ class Service::AmazonCloudFrontController < ApplicationController
       } and return if @region.blank?
 
       render json: {
-        message: 'Please send a valid date in YY-MM-DD format'
+        message: 'Please send a valid date in YYYY-MM-DD format'
       } and return if params[:date].present? && invalid_date?(params[:date])
     end
 

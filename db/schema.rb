@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_02_09_120721) do
 
-  create_table "aws_price_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "aws_price_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "version"
     t.string "offer_code"
     t.datetime "publication_date"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_02_09_120721) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "aws_product_prices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "aws_product_prices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "offer_term_code"
     t.datetime "effective_date"
     t.json "price_dimensions"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_02_09_120721) do
     t.index ["aws_product_id"], name: "index_aws_product_prices_on_aws_product_id"
   end
 
-  create_table "aws_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "aws_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "sku"
     t.string "product_family"
     t.json "aws_attributes"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_02_09_120721) do
     t.index ["aws_region_id"], name: "index_aws_products_on_aws_region_id"
   end
 
-  create_table "aws_regions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "aws_regions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "region_code"
     t.string "region_name"
     t.datetime "created_at", precision: 6, null: false
